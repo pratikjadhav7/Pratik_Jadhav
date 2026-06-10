@@ -75,20 +75,47 @@ chatbotToggle.addEventListener('click', toggleChatbot);
 chatbotClose.addEventListener('click', toggleChatbot);
 
 // Chatbot response data
-const botResponses = {
-    "hello": "Hi there! How can I help you learn more about Pratik?",
-    "hi": "Hello! Ask me about Pratik's skills, projects, experience, or education.",
-    "skills": "Pratik is skilled in Java, C++, MySQL, HTML, CSS, JavaScript, React.js, and Spring Boot. He is also strong in problem-solving and communication.",
-    "projects": "Pratik has worked on an <b>E-Commerce Website</b>, <b>Sahyadri Treks</b>, and <b>ConnectU</b>. Which one would you like to know more about?",
-    "education": "Pratik is currently pursuing his B.Tech in Computer Science & Engineering at <b>Sharad Institute Of Technology</b> (CGPA: 7.40). He completed HSC (76.16%) and SSC (91.0%) from schools in Sangli.",
-    "contact": "You can reach Pratik at 📧 <b>pratikjadhav9302@gmail.com</b> or call 📞 <b>8600729302</b>.",
-    "default": "I'm Pratik's assistant! Try asking about his <b>skills</b>, <b>projects</b>, <b>experience</b>, <b>internship</b>, or <b>education</b>."
+const topicDetails = {
+    skills: `💻 <b>Pratik's Skills</b><br><br>🔹 <b>Languages:</b> C, C++, Java, JavaScript, MySQL<br>🔹 <b>Web Dev:</b> HTML5, CSS3, React.js, Spring Boot, Apache<br>🔹 <b>Soft Skills:</b> Problem Solving, Communication, Logical Thinking`,
+
+    education: `🎓 <b>Pratik's Education</b><br><br>📌 <b>B.Tech CSE</b> — Sharad Institute Of Technology (2022–2026) | CGPA: 7.40<br>📌 <b>HSC</b> — Shantiniketan Vidhyamandir, Sangli (2022) | 76.16%<br>📌 <b>SSC</b> — Aanand Gurukul, Chikurde (2020) | 91.0%`,
+
+    contact: `📬 <b>Get in Touch</b><br><br>📧 <b>Email:</b> pratikjadhav9302@gmail.com<br>📞 <b>Phone:</b> 8600729302<br>🐙 <b>GitHub:</b> github.com/pratikjadhav7<br>💼 <b>LinkedIn:</b> linkedin.com/in/pratik-jadhav-393772370`,
+
+    certifications: `🏅 <b>Certifications</b><br><br>☁️ <b>AWS Academy Graduate</b> — Cloud Architecting (60-hour course)<br>🔐 <b>NPTEL Elite</b> — Cryptography & Network Security, IIT KGP | 70%<br>🐍 <b>NPTEL Elite</b> — The Joy of Computing using Python, IIT Madras | 78%`,
+
+    projects: `🚀 <b>Featured Projects</b><br><br>Which project would you like to know about?`,
 };
 
 const experienceDetails = {
-    nexanova: `<b>Application Developer Intern — Nexanova Protech</b><br>Developed and maintained full-stack applications using modern web technologies. Engineered backend systems, integrated database solutions, and applied strong DSA foundations.<br><br>🛠️ <i>C++ & Java (DSA), HTML/CSS/JS, React.js, Spring Boot, MySQL</i>`,
-    tecspeak: `<b>Web Developer Intern — TecSpeak IT Solutions, Sangli</b><br>Designed and developed responsive webpages. Collaborated with the development team to implement interactive features and optimise website performance with a focus on user-friendly interfaces.`
+    nexanova: `🚀 <b>Application Developer Intern — Nexanova Protech</b><br>Developed and maintained full-stack applications using modern web technologies. Engineered backend systems, integrated database solutions, and applied strong DSA foundations.<br><br>🛠️ <i>C++ & Java (DSA), HTML/CSS/JS, React.js, Spring Boot, MySQL</i>`,
+    tecspeak: `💻 <b>Web Developer Intern — TecSpeak IT Solutions, Sangli</b><br>Designed and developed responsive webpages. Collaborated with the development team to implement interactive features and optimise website performance with a focus on user-friendly interfaces.`
 };
+
+const projectDetails = {
+    ecommerce: `🛒 <b>E-Commerce Website</b><br>A responsive books commerce website with product search, user authentication, and performance optimizations for mobile & desktop.<br><br>🛠️ <i>HTML, CSS, JavaScript</i>`,
+    sahyadri: `🏔️ <b>Sahyadri Treks</b><br>A trekking platform with information on destinations, nearby places, and restaurant suggestions for trekkers.<br><br>🛠️ <i>Bootstrap, MS Excel Data</i>`,
+    connectu: `🤝 <b>ConnectU</b><br>A networking platform connecting alumni and students for mentorship, career guidance, and job opportunities to support long-term community building.<br><br>🛠️ <i>Responsive UI, Community Platform</i>`
+};
+
+const MAIN_MENU_REPLIES = [
+    { label: '💻 Skills',          value: 'skills' },
+    { label: '🚀 Projects',        value: 'projects' },
+    { label: '🏢 Experience',      value: 'experience' },
+    { label: '🎓 Education',       value: 'education' },
+    { label: '🏅 Certifications',  value: 'certifications' },
+    { label: '📬 Contact',         value: 'contact' },
+];
+
+function showMainMenu() {
+    addMessage(
+        `Hi! 👋 I'm Pratik's virtual assistant.<br>What would you like to know about him?`,
+        false,
+        MAIN_MENU_REPLIES
+    );
+}
+
+let menuShown = false;
 
 function addMessage(message, isUser = false, quickReplies = []) {
     const messageDiv = document.createElement('div');
@@ -134,6 +161,40 @@ function handleUserInput(userMessage) {
     setTimeout(() => {
         const lower = userMessage.toLowerCase();
 
+        // Show main menu
+        if (lower.includes('hello') || lower.includes('hi') || lower.includes('menu') || lower.includes('help') || lower.includes('start') || lower.includes('hey')) {
+            addMessage(
+                `Great to meet you! 😊 Here's what you can explore about Pratik:`,
+                false,
+                MAIN_MENU_REPLIES
+            );
+            return;
+        }
+
+        // Skills
+        if (lower.includes('skill') || lower.includes('tech') || lower.includes('language') || lower.includes('stack')) {
+            addMessage(topicDetails.skills);
+            return;
+        }
+
+        // Education
+        if (lower.includes('education') || lower.includes('college') || lower.includes('degree') || lower.includes('study') || lower.includes('academic') || lower.includes('cgpa') || lower.includes('btech') || lower.includes('b.tech')) {
+            addMessage(topicDetails.education);
+            return;
+        }
+
+        // Certifications
+        if (lower.includes('certif') || lower.includes('aws') || lower.includes('nptel') || lower.includes('certificate')) {
+            addMessage(topicDetails.certifications);
+            return;
+        }
+
+        // Contact
+        if (lower.includes('contact') || lower.includes('email') || lower.includes('phone') || lower.includes('reach') || lower.includes('linkedin') || lower.includes('github')) {
+            addMessage(topicDetails.contact);
+            return;
+        }
+
         // Specific experience detail requests
         if (lower.includes('nexanova')) {
             addMessage(experienceDetails.nexanova);
@@ -164,15 +225,40 @@ function handleUserInput(userMessage) {
             return;
         }
 
-        // Keyword-based fallback
-        let botReply = botResponses["default"];
-        for (const key in botResponses) {
-            if (lower.includes(key)) {
-                botReply = botResponses[key];
-                break;
-            }
+        // Project details
+        if (lower.includes('e-commerce') || lower.includes('ecommerce') || lower.includes('book')) {
+            addMessage(projectDetails.ecommerce);
+            return;
         }
-        addMessage(botReply);
+        if (lower.includes('sahyadri') || lower.includes('trek')) {
+            addMessage(projectDetails.sahyadri);
+            return;
+        }
+        if (lower.includes('connectu') || lower.includes('connect u') || lower.includes('alumni')) {
+            addMessage(projectDetails.connectu);
+            return;
+        }
+
+        // General projects query
+        if (lower.includes('project')) {
+            addMessage(
+                topicDetails.projects,
+                false,
+                [
+                    { label: '🛒 E-Commerce Website', value: 'E-Commerce Website' },
+                    { label: '🏔️ Sahyadri Treks',     value: 'Sahyadri Treks' },
+                    { label: '🤝 ConnectU',            value: 'ConnectU' }
+                ]
+            );
+            return;
+        }
+
+        // Default — show menu
+        addMessage(
+            `I'm not sure about that, but here's what I can help you with:`,
+            false,
+            MAIN_MENU_REPLIES
+        );
     }, 600);
 }
 
@@ -182,6 +268,24 @@ chatForm.addEventListener('submit', (e) => {
     if (!userMessage) return;
     chatInput.value = '';
     handleUserInput(userMessage);
+});
+
+// Show main menu with quick-reply buttons when chatbot opens for the first time
+chatbotToggle.addEventListener('click', () => {
+    if (!menuShown) {
+        menuShown = true;
+        setTimeout(() => {
+            // Replace the static welcome message quick replies
+            const existing = chatMessages.querySelector('.flex.flex-wrap');
+            if (!existing) {
+                addMessage(
+                    `What would you like to know about Pratik?`,
+                    false,
+                    MAIN_MENU_REPLIES
+                );
+            }
+        }, 400);
+    }
 });
 
 // Sticky Navbar Background
